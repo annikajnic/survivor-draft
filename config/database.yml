@@ -24,7 +24,7 @@ development:
   <<: *default
   database: survivor_draft_development
   username: postgres
-  password: "@ajn"
+  password: postgres
   host: localhost
   port: 5432
   # Schema search path. The server defaults to $user,public
