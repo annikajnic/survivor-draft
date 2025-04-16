@@ -9,7 +9,7 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
-gem "dotenv-rails", "~> 2.1", ">= 2.1.1"
+gem "dotenv-rails", "~> 3.1"
 group :dokku_deployment_fix do
   gem "sprockets-rails"
 end
