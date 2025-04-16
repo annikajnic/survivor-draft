@@ -4,11 +4,34 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_layout
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :first_name, :last_name, :role ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :first_name, :last_name ])
     devise_parameter_sanitizer.permit(:account_update, keys: [ :first_name, :last_name ])
+  end
+
+  private
+
+  def set_layout
+    if devise_controller?
+      "devise"
+    elsif admin_namespace?
+      "admin"
+    elsif user_namespace?
+      "user"
+    else
+      "application"
+    end
+  end
+
+  def admin_namespace?
+    controller_path.start_with?("admin/")
+  end
+
+  def user_namespace?
+    controller_path.start_with?("user/")
   end
 end
