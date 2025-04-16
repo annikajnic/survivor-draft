@@ -11,20 +11,27 @@
   <% end %>
 
   <div class="mb-3">
-    <%= form.label :name, class: 'form-label' %>
-    <%= form.text_field :name, class: 'form-control' %>
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
   <div class="mb-3">
-    <%= form.label :status, class: 'form-label' %>
-    <%= form.select :status, 
-        [['Active', 'active'], ['Eliminated', 'eliminated']], 
-        {}, 
-        class: 'form-select' %>
+    <%= form.label :season_number, class: "form-label" %>
+    <%= form.number_field :season_number, class: "form-control", min: 1 %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :tribe, class: "form-label" %>
+    <%= form.text_field :tribe, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :status, class: "form-label" %>
+    <%= form.select :status, options_for_select([['Active', 'active'], ['Inactive', 'inactive']], contestant.status), {}, class: "form-select" %>
   </div>
 
   <div class="actions">
-    <%= form.submit class: 'btn btn-primary' %>
+    <%= form.submit class: "btn btn-primary" %>
     <%= link_to 'Cancel', admin_contestants_path, class: 'btn btn-secondary ms-2' %>
   </div>
 <% end %> 

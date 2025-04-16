@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <%= link_to "Survivor Draft Admin", admin_root_path, class: "navbar-brand" %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <%= link_to "Dashboard", admin_root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Contestants", admin_contestants_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Episodes", admin_episodes_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Users", admin_users_path, class: "nav-link" %>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+            <i class="bi bi-person-circle me-1"></i>
+            <%= current_user.full_name %>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <%= link_to "Edit Profile", edit_user_registration_path, class: "dropdown-item" %>
+            </li>
+            <li>
+              <%= link_to "View Site", root_path, class: "dropdown-item" %>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s;
+  }
+
+  .nav-link:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .dropdown-item {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  .navbar-toggler {
+    border: none;
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+</style> 

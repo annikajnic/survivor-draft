@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Survivor Draft - <%= content_for?(:title) ? yield(:title) : "User Dashboard" %></title>
+    <title>Survivor Draft Admin - <%= content_for?(:title) ? yield(:title) : "Dashboard" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -9,12 +9,12 @@
     <%= javascript_importmap_tags %>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <% content_for :head do %>
-      <%= stylesheet_link_tag "user", "data-turbo-track": "reload" %>
+      <%= stylesheet_link_tag "admin", "data-turbo-track": "reload" %>
     <% end %>
   </head>
 
   <body class="bg-light">
-    <%= render "layouts/user_header" %>
+    <%= render "layouts/admin_header" %>
 
     <div class="container py-4">
       <% if notice %>
@@ -38,8 +38,8 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <h5>Survivor Draft</h5>
-            <p class="text-muted">A fun way to follow your favorite reality show.</p>
+            <h5>Survivor Draft Admin</h5>
+            <p class="text-muted">Administration Panel</p>
           </div>
           <div class="col-md-6 text-md-end">
             <p class="mb-0">&copy; <%= Time.current.year %> Survivor Draft. All rights reserved.</p>
