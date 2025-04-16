@@ -1,43 +1,147 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<% content_for :title, "Edit Profile" %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h2 class="text-center mb-4">Edit Profile</h2>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "needs-validation", novalidate: true }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= f.label :first_name, class: "form-label" %>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-person"></i>
+                </span>
+                <%= f.text_field :first_name, class: "form-control", required: true %>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <%= f.label :last_name, class: "form-label" %>
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="bi bi-person"></i>
+                </span>
+                <%= f.text_field :last_name, class: "form-control", required: true %>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :email, class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-envelope"></i>
+              </span>
+              <%= f.email_field :email, autocomplete: "email", class: "form-control", required: true %>
+            </div>
+          </div>
+
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div class="alert alert-info">
+              Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+            </div>
+          <% end %>
+
+          <div class="mb-3">
+            <%= f.label :password, class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-lock"></i>
+              </span>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+            </div>
+            <div class="form-text">
+              Leave blank if you don't want to change it
+              <% if @minimum_password_length %>
+                <br>Minimum <%= @minimum_password_length %> characters
+              <% end %>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :password_confirmation, class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-lock"></i>
+              </span>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <%= f.label :current_password, class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-lock"></i>
+              </span>
+              <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control", required: true %>
+            </div>
+            <div class="form-text">
+              We need your current password to confirm your changes
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <%= f.submit "Update Profile", class: "btn btn-primary btn-lg" %>
+          </div>
+        <% end %>
+
+        <div class="text-center mt-4">
+          <%= link_to "Back", :back, class: "btn btn-outline-secondary" %>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+<style>
+  .card {
+    border: none;
+    border-radius: 1rem;
+  }
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
+  .form-label {
+    font-weight: 500;
+    color: #2c3e50;
+  }
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+  .input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+  }
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
+  .form-control {
+    border-left: none;
+  }
 
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+  }
 
-<h3>Cancel my account</h3>
+  .btn-primary {
+    background-color: #3498db;
+    border: none;
+    padding: 0.75rem;
+    font-weight: 500;
+  }
 
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
+  .btn-primary:hover {
+    background-color: #2980b9;
+  }
 
-<%= link_to "Back", :back %>
+  .form-text {
+    color: #6c757d;
+    font-size: 0.875rem;
+  }
+
+  .alert {
+    border: none;
+    border-radius: 0.5rem;
+  }
+</style>
