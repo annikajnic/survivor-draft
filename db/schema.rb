@@ -10,9 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_15_162732) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_15_215635) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "contestants", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "status", default: "active", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_contestants_on_name", unique: true
+  end
+
+  create_table "episodes", force: :cascade do |t|
+    t.integer "number", null: false
+    t.datetime "air_date", null: false
+    t.datetime "voting_deadline", null: false
+    t.string "status", default: "upcoming", null: false
+    t.boolean "is_final", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["number"], name: "index_episodes_on_number", unique: true
+  end
+
+  create_table "final_predictions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "contestant_id", null: false
+    t.integer "placement", null: false
+    t.integer "jury_votes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contestant_id"], name: "index_final_predictions_on_contestant_id"
+    t.index ["user_id", "placement"], name: "index_final_predictions_on_user_id_and_placement", unique: true
+    t.index ["user_id"], name: "index_final_predictions_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "first_name"
@@ -21,5 +52,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_15_162732) do
     t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "role", default: "user", null: false
+    t.string "status", default: "active", null: false
   end
+
+  create_table "votes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "contestant_id", null: false
+    t.bigint "episode_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contestant_id"], name: "index_votes_on_contestant_id"
+    t.index ["episode_id"], name: "index_votes_on_episode_id"
+    t.index ["user_id", "contestant_id"], name: "index_votes_on_user_id_and_contestant_id", unique: true
+    t.index ["user_id", "episode_id"], name: "index_votes_on_user_id_and_episode_id", unique: true
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
+  add_foreign_key "final_predictions", "contestants"
+  add_foreign_key "final_predictions", "users"
+  add_foreign_key "votes", "contestants"
+  add_foreign_key "votes", "episodes"
+  add_foreign_key "votes", "users"
 end

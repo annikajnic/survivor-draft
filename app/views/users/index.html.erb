@@ -2,15 +2,32 @@
 
 <% content_for :title, "Users" %>
 
-<h1>Users</h1>
+<h1>Players</h1>
 
 <div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
+
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">First Name</th>
+      <th scope="col">Last Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Last Updated At</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+    <% @users.each do |user| %>
+     <tr id="<%= dom_id user %>">
+        <%= render user %>
+        <td>
+          <%= link_to "Show", user %>
+          <%# <%= link_to "Edit", user_edit %> 
+        </td>
+    </tr>
+    
   <% end %>
+  </Table>
 </div>
 
 <%= link_to "New user", new_user_path %>
