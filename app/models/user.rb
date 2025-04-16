@@ -10,7 +10,8 @@ class User < ApplicationRecord
   has_many :episode_predictions
 
   validates :email, presence: true, uniqueness: true
-  validates :name, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   validates :status, presence: true, inclusion: { in: %w[active eliminated] }
   validates :role, presence: true, inclusion: { in: %w[admin user] }
 
@@ -19,5 +20,9 @@ class User < ApplicationRecord
 
   def admin?
     role == "admin"
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 end

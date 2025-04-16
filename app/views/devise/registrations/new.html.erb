@@ -1,29 +1,158 @@
-<h2>Sign up</h2>
+<div class="auth-container p-5 row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="auth-card">
+      <div class="auth-header text-center mb-4">
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join the Survivor Draft</p>
+      </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+      <div class="auth-body">
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <%= f.label :first_name, class: "form-label" %>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-person"></i>
+                  </span>
+                  <%= f.text_field :first_name, autofocus: true, class: "form-control", placeholder: "First name" %>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <%= f.label :last_name, class: "form-label" %>
+                <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="bi bi-person"></i>
+                  </span>
+                  <%= f.text_field :last_name, class: "form-control", placeholder: "Last name" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <%= f.label :email, class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-envelope"></i>
+              </span>
+              <%= f.email_field :email, autocomplete: "email", class: "form-control", placeholder: "Enter your email" %>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <%= f.label :password, class: "form-label" %>
+            <% if @minimum_password_length %>
+              <small class="text-muted">(<%= @minimum_password_length %> characters minimum)</small>
+            <% end %>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-lock"></i>
+              </span>
+              <%= f.password_field :password, autocomplete: "new-password", class: "form-control", placeholder: "Enter your password" %>
+            </div>
+          </div>
+
+          <div class="form-group mb-4">
+            <%= f.label :password_confirmation, class: "form-label" %>
+            <div class="input-group">
+              <span class="input-group-text">
+                <i class="bi bi-lock"></i>
+              </span>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your password" %>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <%= f.submit "Sign up", class: "btn btn-primary btn-lg" %>
+          </div>
+        <% end %>
+
+        <div class="auth-footer text-center mt-4">
+          <p class="mb-0">Already have an account? 
+            <%= link_to "Sign in", new_session_path(resource_name), class: "text-decoration-none" %>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+<style>
+  .auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+  .auth-card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+  }
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+  .auth-header {
+    margin-bottom: 2rem;
+  }
 
-<%= render "devise/shared/links" %>
+  .auth-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .auth-subtitle {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    color: #2c3e50;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .input-group-text {
+    background-color: #f8f9fa;
+    border-right: none;
+  }
+
+  .form-control {
+    border-left: none;
+  }
+
+  .form-control:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+  }
+
+  .btn-primary {
+    background-color: #3498db;
+    border: none;
+    padding: 0.75rem;
+    font-weight: 500;
+  }
+
+  .btn-primary:hover {
+    background-color: #2980b9;
+  }
+
+  .auth-footer a {
+    color: #3498db;
+  }
+
+  .auth-footer a:hover {
+    color: #2980b9;
+  }
+</style>
