@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_16_175816) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_17_195224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+  enable_extension "pgcrypto"
 
   create_table "contestants", force: :cascade do |t|
     t.string "name", null: false
@@ -32,22 +33,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_16_175816) do
     t.boolean "is_final", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "season_number", default: 1, null: false
     t.index ["number"], name: "index_episodes_on_number", unique: true
   end
 
   create_table "final_predictions", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.bigint "contestant_id", null: false
     t.integer "placement", null: false
     t.integer "jury_votes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
     t.index ["contestant_id"], name: "index_final_predictions_on_contestant_id"
-    t.index ["user_id", "placement"], name: "index_final_predictions_on_user_id_and_placement", unique: true
-    t.index ["user_id"], name: "index_final_predictions_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -70,16 +70,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_16_175816) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.bigint "user_id", null: false
     t.bigint "contestant_id", null: false
     t.bigint "episode_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "user_id"
     t.index ["contestant_id"], name: "index_votes_on_contestant_id"
     t.index ["episode_id"], name: "index_votes_on_episode_id"
-    t.index ["user_id", "contestant_id"], name: "index_votes_on_user_id_and_contestant_id", unique: true
-    t.index ["user_id", "episode_id"], name: "index_votes_on_user_id_and_episode_id", unique: true
-    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
   add_foreign_key "final_predictions", "contestants"

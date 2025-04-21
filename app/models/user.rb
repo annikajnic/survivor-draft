@@ -5,15 +5,13 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :votes
+  has_many :episodes, through: :votes
   has_many :contestants, through: :votes
   has_many :final_predictions
-  has_many :episode_predictions
 
-  validates :email, presence: true, uniqueness: true
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :status, presence: true, inclusion: { in: %w[active eliminated] }
-  validates :role, presence: true, inclusion: { in: %w[admin user] }
+  validates :email, presence: true, uniqueness: true
 
   scope :active, -> { where(status: "active") }
   scope :eliminated, -> { where(status: "eliminated") }

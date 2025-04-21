@@ -9,6 +9,7 @@
   <table class="table">
   <thead>
     <tr>
+      <th scope="col">Id</th>
       <th scope="col">First Name</th>
       <th scope="col">Last Name</th>
       <th scope="col">Email</th>
@@ -21,7 +22,7 @@
      <tr id="<%= dom_id user %>">
         <%= render user %>
         <td>
-          <%= link_to "Show", user %>
+          <%= link_to "Show", admin_user_path(user) %>
           <%# <%= link_to "Edit", user_edit %> 
         </td>
     </tr>
@@ -30,4 +31,3 @@
   </Table>
 </div>
 
-<%= link_to "New user", new_user_path %>

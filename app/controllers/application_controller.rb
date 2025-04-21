@@ -13,6 +13,12 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [ :first_name, :last_name ])
   end
 
+  def require_admin
+    unless current_user&.admin?
+      redirect_to root_path, alert: "You must be an admin to access this page."
+    end
+  end
+
   private
 
   def set_layout

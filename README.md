@@ -75,7 +75,7 @@ A web application for managing and participating in Survivor TV show draft pools
    ```
 
 6. **Access the application**
-   - Visit `http://localhost:3000`
+   - Visit `http://localhost:4000`
    - Sign in with your admin credentials
 
 ## Usage
