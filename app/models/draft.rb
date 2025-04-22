@@ -7,7 +7,7 @@ class Draft < ApplicationRecord
 
   # Players in this draft
   has_many :draft_players, dependent: :destroy
-  has_many :players, through: :draft_players, source: :user
+  has_many :players, through: :draft_players, source: :player
 
   # Episodes for this draft
   has_many :episodes, -> { order(number: :asc) }, dependent: :destroy
@@ -15,13 +15,13 @@ class Draft < ApplicationRecord
   # Validations
   validates :season_number, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :episodes_count, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :airing_date, presence: true
+  validates :air_datetime, presence: true
   validates :draft_owner, presence: true
 
   # Scopes
   scope :by_season, ->(season) { where(season_number: season) }
-  scope :active, -> { where("airing_date <= ?", Time.current) }
-  scope :upcoming, -> { where("airing_date > ?", Time.current) }
+  scope :active, -> { where("air_datetime <= ?", Time.current) }
+  scope :upcoming, -> { where("air_datetime > ?", Time.current) }
 
   # Callbacks
   after_create :create_episodes
@@ -33,8 +33,8 @@ class Draft < ApplicationRecord
       episodes.create!(
         number: number,
         season_number: season_number,
-        air_date: airing_date + (number - 1).weeks,
-        voting_deadline: airing_date + (number - 1).weeks + 1.day,
+        air_date: air_datetime + (number - 1).weeks,
+        voting_deadline: air_datetime + (number - 1).weeks + 1.day,
         status: number == 1 ? "upcoming" : "upcoming"
       )
     end

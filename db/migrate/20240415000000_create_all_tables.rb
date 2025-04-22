@@ -8,9 +8,8 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
       t.string :name, null: false
       t.string :email, null: false
       t.string :password_digest, null: false
-      t.string :role, null: false, default: 'player', enum: [ 'player', 'admin' ]
-      t.string :status, null: false, default: 'active', enum: [ 'active', 'eliminated' ]
-      t.array :draft_ids, array: true, default: []
+      t.string :role, null: false, default: 'player', enum_type: [ 'player', 'admin' ]
+      t.string :status, null: false, default: 'active', enum_type: [ 'active', 'eliminated' ]
 
       t.timestamps
     end
@@ -32,7 +31,7 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
       t.datetime :voting_deadline, null: false
       t.integer :duration, null: false, default: 90
       t.integer :season_number, null: false
-      t.string :status, null: false, default: 'upcoming', enum: [ 'upcoming', 'airing', 'finished' ]
+      t.string :status, null: false, default: 'upcoming', enum_type: [ 'upcoming', 'airing', 'finished' ]
       t.boolean :is_final, default: false
 
       t.timestamps
@@ -44,13 +43,13 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
       t.integer :season_number, null: false
       t.references :draft_owner, null: false, type: :uuid, foreign_key: { to_table: :users }
       t.integer :episodes_count, null: false
-      t.date :airing_date, null: false
+      t.datetime :air_datetime, null: false
       t.boolean :votes_first_episode, default: false, null: false
 
       t.timestamps
     end
     add_index :drafts, :season_number
-    add_index :drafts, :airing_date
+    add_index :drafts, :air_datetime
 
     # Create draft_contestants join table
     create_table :draft_contestants, id: :uuid do |t|
@@ -63,7 +62,7 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
     # Create draft_players join table
     create_table :draft_players, id: :uuid do |t|
       t.references :draft, null: false, type: :uuid, foreign_key: true
-      t.references :player, null: false, type: :uuid, foreign_key: { to_table: :users }
+      t.references :user, null: false, type: :uuid, foreign_key: { to_table: :users }
       t.timestamps
     end
     add_index :draft_players, [ :draft_id, :player_id ], unique: true

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_04_15_000002) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_22_021250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -60,16 +60,21 @@ ActiveRecord::Schema[8.0].define(version: 2024_04_15_000002) do
     t.integer "number", null: false
     t.datetime "air_date", null: false
     t.datetime "voting_deadline", null: false
+    t.integer "duration", default: 90, null: false
+    t.integer "season_number", null: false
     t.string "status", default: "upcoming", null: false
     t.boolean "is_final", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "draft_id"
     t.index ["number"], name: "index_episodes_on_number", unique: true
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
+    t.string "role", default: "player", null: false
+    t.string "status", default: "active", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "encrypted_password", default: "", null: false

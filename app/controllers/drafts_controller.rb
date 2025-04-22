@@ -1,15 +1,15 @@
 class DraftsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_draft, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_draft, only: [ :show, :edit, :update, :destroy, :send_invites ]
 
   def index
-    @drafts = Draft.all.order(airing_date: :desc)
+    @drafts = Draft.all.order(air_datetime: :desc)
   end
 
   def show
     @episodes = @draft.episodes.order(number: :asc)
     @contestants = @draft.contestants.order(name: :asc)
-    @players = @draft.players
+    @players = @draft.players()
   end
 
   def new
@@ -42,6 +42,22 @@ class DraftsController < ApplicationController
     redirect_to drafts_url, notice: "Draft was successfully destroyed."
   end
 
+  def send_invites
+    if request.post?
+      emails = params[:emails].split(/[\s,]+/).map(&:strip).reject(&:empty?)
+
+      if emails.any?
+        emails.each do |email|
+          DraftMailer.invite_email(@draft, email).deliver_later
+        end
+
+        redirect_to @draft, notice: "Invites have been sent successfully."
+      else
+        redirect_to send_invites_draft_path(@draft), alert: "Please enter at least one email address."
+      end
+    end
+  end
+
   private
 
   def set_draft
@@ -49,6 +65,6 @@ class DraftsController < ApplicationController
   end
 
   def draft_params
-    params.require(:draft).permit(:season_number, :episodes_count, :airing_date)
+    params.require(:draft).permit(:season_number, :episodes_count, :air_datetime)
   end
 end

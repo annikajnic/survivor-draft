@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   resources :drafts do
     resources :episodes, only: [ :show, :update ]
     resources :votes, only: [ :create, :update ]
+    member do
+      get :send_invites
+      post :send_invites
+    end
   end
 
   # Contestants routes

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px; font-family: Arial, sans-serif;">
+      <div style="background-color: #f8f9fa; padding: 20px; border-radius: 5px;">
+        <h2 style="color: #2c3e50; margin-bottom: 20px;">You've been invited to join Survivor Draft!</h2>
+        
+        <p style="color: #34495e; line-height: 1.6;">
+          You've been invited to join Season <%= @draft.season_number %> of Survivor Draft.
+        </p>
+        
+        <p style="color: #34495e; line-height: 1.6;">
+          The draft will start on <%= @draft.air_datetime.strftime("%B %d, %Y at %I:%M %p") %> and will include <%= @draft.episodes_count %> episodes.
+        </p>
+        
+        <div style="margin: 20px 0;">
+          <%= link_to 'Join Draft', @invite_url, 
+              style: "display: inline-block; padding: 10px 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px;" %>
+        </div>
+        
+        <p style="color: #34495e; line-height: 1.6;">
+          If you don't have an account yet, you'll need to create one to join the draft.
+        </p>
+        
+        <p style="color: #34495e; line-height: 1.6; margin-top: 20px;">Best regards,<br>The Survivor Draft Team</p>
+      </div>
+    </div>
+  </body>
+</html> 

@@ -1,0 +1,12 @@
+You've been invited to join Survivor Draft!
+
+You've been invited to join Season <%= @draft.season_number %> of Survivor Draft.
+
+The draft will start on <%= @draft.air_datetime.strftime("%B %d, %Y at %I:%M %p") %> and will include <%= @draft.episodes_count %> episodes.
+
+Join the draft by visiting: <%= @invite_url %>
+
+If you don't have an account yet, you'll need to create one to join the draft.
+
+Best regards,
+The Survivor Draft Team 
