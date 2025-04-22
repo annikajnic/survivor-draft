@@ -8,6 +8,9 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
       t.string :name, null: false
       t.string :email, null: false
       t.string :password_digest, null: false
+      t.string :role, null: false, default: 'player', enum: [ 'player', 'admin' ]
+      t.string :status, null: false, default: 'active', enum: [ 'active', 'eliminated' ]
+      t.array :draft_ids, array: true, default: []
 
       t.timestamps
     end
@@ -27,7 +30,9 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
       t.integer :number, null: false
       t.datetime :air_date, null: false
       t.datetime :voting_deadline, null: false
-      t.string :status, null: false, default: 'upcoming'
+      t.integer :duration, null: false, default: 90
+      t.integer :season_number, null: false
+      t.string :status, null: false, default: 'upcoming', enum: [ 'upcoming', 'airing', 'finished' ]
       t.boolean :is_final, default: false
 
       t.timestamps

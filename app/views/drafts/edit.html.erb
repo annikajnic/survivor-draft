@@ -1,0 +1,12 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-2xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-gray-900">Edit Draft</h1>
+      <%= link_to 'Back to Draft', @draft, class: "text-blue-600 hover:text-blue-800" %>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <%= render 'form', draft: @draft %>
+    </div>
+  </div>
+</div> 

@@ -1,9 +1,29 @@
 Rails.application.routes.draw do
-  # Root route
-  root "home#index"
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    sessions: "users/sessions",
+    confirmations: "users/confirmations"
+  }
 
-  # Devise routes for authentication
-  devise_for :users
+  # Root route
+  root "drafts#index"
+
+  # Drafts routes
+  resources :drafts do
+    resources :episodes, only: [ :show, :update ]
+    resources :votes, only: [ :create, :update ]
+  end
+
+  # Contestants routes
+  resources :contestants, only: [ :index, :show ]
+
+  # Users routes
+  resources :users, only: [ :show ] do
+    member do
+      get :drafts
+      get :votes
+    end
+  end
 
   # Admin namespace with admin layout
   namespace :admin do
@@ -13,6 +33,7 @@ Rails.application.routes.draw do
     # Admin resources
     resources :contestants
     resources :episodes
+    resources :drafts
     resources :users, only: [ :index, :show, :edit, :update ]
   end
 
