@@ -13,14 +13,14 @@
           <h2 class="text-xl font-semibold text-gray-800">
             Season <%= draft.season_number %>
           </h2>
-          <span class="px-3 py-1 text-sm rounded-full <%= draft.airing_date > Time.current ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
-            <%= draft.airing_date > Time.current ? 'Upcoming' : 'Active' %>
+          <span class="px-3 py-1 text-sm rounded-full <%= draft.airing_datetime > Time.current ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+            <%= draft.airing_datetime > Time.current ? 'Upcoming' : 'Active' %>
           </span>
         </div>
 
         <div class="space-y-2 text-gray-600">
           <p><strong>Episodes:</strong> <%= draft.episodes_count %></p>
-          <p><strong>Start Date:</strong> <%= draft.airing_date.strftime("%B %d, %Y") %></p>
+          <p><strong>Start Date:</strong> <%= draft.airing_datetime.strftime("%B %d, %Y at %I:%M %p") %></p>
           <p><strong>Owner:</strong> <%= draft.draft_owner.name %></p>
           <p><strong>Players:</strong> <%= draft.players.count %></p>
         </div>

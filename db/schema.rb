@@ -47,11 +47,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_021250) do
     t.integer "season_number", null: false
     t.uuid "draft_owner_id", null: false
     t.integer "episodes_count", null: false
-    t.date "airing_date", null: false
+    t.date "airing_datetime", null: false
     t.boolean "votes_first_episode", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["airing_date"], name: "index_drafts_on_airing_date"
+    t.index ["airing_datetime"], name: "index_drafts_on_airing_datetime"
     t.index ["draft_owner_id"], name: "index_drafts_on_draft_owner_id"
     t.index ["season_number"], name: "index_drafts_on_season_number"
   end

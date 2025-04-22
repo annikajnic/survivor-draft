@@ -75,29 +75,4 @@
       <% end %>
     </div>
   </div>
-</header>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuButton = document.querySelector('button[aria-controls="mobile-menu"]');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const userMenuButton = document.getElementById('user-menu-button');
-    const userMenu = document.querySelector('[role="menu"]');
-
-    if (mobileMenuButton && mobileMenu) {
-      mobileMenuButton.addEventListener('click', function() {
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !expanded);
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
-
-    if (userMenuButton && userMenu) {
-      userMenuButton.addEventListener('click', function() {
-        const expanded = this.getAttribute('aria-expanded') === 'true';
-        this.setAttribute('aria-expanded', !expanded);
-        userMenu.classList.toggle('hidden');
-      });
-    }
-  });
-</script> 
+</header> 
