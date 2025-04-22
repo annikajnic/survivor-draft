@@ -27,8 +27,9 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
     # Create episodes table
     create_table :episodes do |t|
       t.integer :number, null: false
-      t.datetime :air_date, null: false
+      t.datetime :air_datetime, null: false
       t.datetime :voting_deadline, null: false
+      t.datetime :open_deadline, null: false
       t.integer :duration, null: false, default: 90
       t.integer :season_number, null: false
       t.string :status, null: false, default: 'upcoming', enum_type: [ 'upcoming', 'airing', 'finished' ]
@@ -43,13 +44,13 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
       t.integer :season_number, null: false
       t.references :draft_owner, null: false, type: :uuid, foreign_key: { to_table: :users }
       t.integer :episodes_count, null: false
-      t.datetime :air_datetime, null: false
+      t.datetime :airing_datetime, null: false
       t.boolean :votes_first_episode, default: false, null: false
 
       t.timestamps
     end
     add_index :drafts, :season_number
-    add_index :drafts, :air_datetime
+    add_index :drafts, :airing_datetime
 
     # Create draft_contestants join table
     create_table :draft_contestants, id: :uuid do |t|

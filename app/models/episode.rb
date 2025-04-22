@@ -5,7 +5,7 @@ class Episode < ApplicationRecord
   has_many :users, through: :votes
 
   validates :number, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :air_date, presence: true
+  validates :air_datetime, presence: true
   validates :voting_deadline, presence: true
   validates :season_number, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :number, uniqueness: { scope: :season_number }
@@ -19,7 +19,7 @@ class Episode < ApplicationRecord
   scope :current_season, -> { where(season_number: Contestant.maximum(:season_number)) }
 
   def self.current_episode
-    current_season.where("air_date <= ?", Time.current)
+    current_season.where("air_datetime <= ?", Time.current)
                  .order(number: :desc)
                  .first
   end

@@ -46,7 +46,14 @@
       <%= form.label :airing_datetime, class: "block text-sm font-medium text-gray-700" %>
       <div class="mt-1">
         <%= form.datetime_field :airing_datetime, 
+            value: Time.zone.today.beginning_of_week.next_occurring(:wednesday),
             class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" %>
+      </div>
+    </div>
+    <div>
+      <%= form.label :votes_first_episode, class: "block text-sm font-medium text-gray-700" %>
+      <div class="mt-1">
+        <%= form.check_box :votes_first_episode, class: "form-switch" %>
       </div>
     </div>
 

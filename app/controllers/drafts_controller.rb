@@ -3,7 +3,7 @@ class DraftsController < ApplicationController
   before_action :set_draft, only: [ :show, :edit, :update, :destroy, :send_invites ]
 
   def index
-    @drafts = Draft.all.order(air_datetime: :desc)
+    @drafts = Draft.all()
   end
 
   def show
@@ -65,6 +65,6 @@ class DraftsController < ApplicationController
   end
 
   def draft_params
-    params.require(:draft).permit(:season_number, :episodes_count, :air_datetime)
+    params.require(:draft).permit(:season_number, :episodes_count, :airing_datetime)
   end
 end

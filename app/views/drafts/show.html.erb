@@ -3,7 +3,7 @@
     <div>
       <h1 class="text-3xl font-bold text-gray-900">Season <%= @draft.season_number %></h1>
       <p class="text-gray-600 mt-1">
-        Starting <%= @draft.air_datetime.strftime("%B %d, %Y at %I:%M %p") %> • 
+        Starting <%= @draft.airing_datetime.strftime("%B %d, %Y at %I:%M %p") %> • 
         <%= @draft.episodes_count %> Episodes
       </p>
     </div>
@@ -31,7 +31,7 @@
                 </span>
               </div>
               <p class="text-gray-600 mt-1">
-                Air Date: <%= episode.air_date.strftime("%B %d, %Y at %I:%M %p") %>
+                Air Date: <%= episode.air_datetime.strftime("%B %d, %Y at %I:%M %p") %>
               </p>
               <p class="text-gray-600">
                 Voting Deadline: <%= episode.voting_deadline.strftime("%B %d, %Y at %I:%M %p") %>
