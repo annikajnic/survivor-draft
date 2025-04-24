@@ -33,7 +33,7 @@ class Draft < ApplicationRecord
       episodes.create!(
         number: number,
         season_number: season_number,
-        air_datetime: airing_datetime + (number - 1).weeks,
+        air_date: airing_datetime + (number - 1).weeks,
         voting_deadline: airing_datetime + (number - 1).weeks - 1.hour,
         status: number == 1 ? "upcoming" : "upcoming"
       )

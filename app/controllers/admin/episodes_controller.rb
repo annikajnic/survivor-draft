@@ -52,6 +52,6 @@ class Admin::EpisodesController < ApplicationController
   end
 
   def episode_params
-    params.require(:episode).permit(:number, :air_datetime, :voting_deadline, :season_number)
+    params.require(:episode).permit(:number, :air_date, :voting_deadline, :season_number)
   end
 end

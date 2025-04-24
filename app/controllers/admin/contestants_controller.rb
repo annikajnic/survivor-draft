@@ -1,6 +1,5 @@
 class Admin::ContestantsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_admin
   before_action :set_contestant, only: [ :show, :edit, :update, :destroy ]
 
   def index

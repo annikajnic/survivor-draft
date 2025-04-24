@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   # Root route
   root "drafts#index"
+  get "admin/test", to: "admin/test#index"
+  get "admin/test/practice", to: "admin/test#practice"
 
   # Drafts routes
   resources :drafts do
@@ -36,13 +38,12 @@ Rails.application.routes.draw do
 
     # Admin resources
     resources :contestants
-    resources :episodes
     resources :drafts
     resources :users, only: [ :index, :show, :edit, :update ]
   end
 
   # User routes with user layout
-  scope module: :user do
+  scope module: :player do
     # User dashboard
     get "dashboard", to: "dashboard#index"
 

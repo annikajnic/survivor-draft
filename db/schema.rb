@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_22_021250) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_22_185042) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -20,6 +20,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_021250) do
     t.string "status", default: "active", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "season_number"
+    t.string "tribe"
     t.index ["name"], name: "index_contestants_on_name", unique: true
   end
 
@@ -47,7 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_021250) do
     t.integer "season_number", null: false
     t.uuid "draft_owner_id", null: false
     t.integer "episodes_count", null: false
-    t.date "airing_datetime", null: false
+    t.datetime "airing_datetime", null: false
     t.boolean "votes_first_episode", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

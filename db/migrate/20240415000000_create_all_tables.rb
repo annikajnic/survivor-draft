@@ -18,7 +18,9 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
     # Create contestants table
     create_table :contestants, id: :uuid do |t|
       t.string :name, null: false
-      t.string :status, null: false, default: 'active'
+      t.string :tribe, null: false
+      t.integer :season_number, null: false
+      t.string :status, null: false, default: 'active', enum_type: [ 'active', 'eliminated', 'winner' ]
 
       t.timestamps
     end
@@ -27,7 +29,7 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
     # Create episodes table
     create_table :episodes do |t|
       t.integer :number, null: false
-      t.datetime :air_datetime, null: false
+      t.datetime :air_date, null: false
       t.datetime :voting_deadline, null: false
       t.datetime :open_deadline, null: false
       t.integer :duration, null: false, default: 90
@@ -68,8 +70,18 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
     end
     add_index :draft_players, [ :draft_id, :player_id ], unique: true
 
+    # Create draft_votes join table
+    create_table :draft_votes, id: :uuid do |t|
+      t.references :draft, null: false, type: :uuid, foreign_key: true
+      t.references :user, null: false, type: :uuid, foreign_key: { to_table: :users }
+      t.references :votes, null: false, type: :uuid, foreign_key: true
+      t.timestamps
+    end
+    add_index :draft_votes, [ :draft_id, :votes_id ], unique: true
+
     # Create votes table
     create_table :votes do |t|
+      t.references :draft, null: false, type: :uuid, foreign_key: true
       t.references :user, null: false, type: :uuid, foreign_key: true
       t.references :contestant, null: false, type: :uuid, foreign_key: true
       t.references :episode, null: false, foreign_key: true

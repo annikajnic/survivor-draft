@@ -21,8 +21,8 @@
   </div>
 
   <div class="mb-3">
-    <%= form.label :air_datetime, class: "form-label" %>
-    <%= form.datetime_field :air_datetime, class: "form-control", value: Time.zone.today.beginning_of_week.next_occurring(:wednesday) %>
+    <%= form.label :air_date, class: "form-label" %>
+    <%= form.datetime_field :air_date, class: "form-control", value: Time.zone.today.beginning_of_week.next_occurring(:wednesday) %>
 
   </div>
     <div class="mb-3">
