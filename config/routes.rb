@@ -53,7 +53,6 @@ Rails.application.routes.draw do
   end
 
   # Public routes (no layout)
-  get "about", to: "home#about"
   get "rules", to: "home#rules"
   get "contact", to: "home#contact"
 

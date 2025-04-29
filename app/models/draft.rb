@@ -25,6 +25,7 @@ class Draft < ApplicationRecord
 
   # Callbacks
   after_create :create_episodes
+  after_create :add_owner_as_player
 
   private
 
@@ -38,5 +39,9 @@ class Draft < ApplicationRecord
         status: number == 1 ? "upcoming" : "upcoming"
       )
     end
+  end
+
+  def add_owner_as_player
+    draft_players.create!(player: draft_owner)
   end
 end

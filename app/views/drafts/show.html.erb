@@ -26,16 +26,20 @@
             <div class="border-b border-gray-200 pb-4 last:border-0">
               <div class="flex justify-between items-center">
                 <h3 class="text-lg font-medium text-gray-800">Episode <%= episode.number %></h3>
-                <span class="px-3 py-1 text-sm rounded-full <%= episode.status == 'upcoming' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
-                  <%= episode.status.titleize %>
+                <span class="px-3 py-1 text-sm rounded-full <%= episode.air_date > Date.today ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+                  <%= episode.air_date > Date.today ? 'Upcoming' : 'Aired' %>
                 </span>
               </div>
               <p class="text-gray-600 mt-1">
                 Air Date: <%= episode.air_date.strftime("%B %d, %Y at %I:%M %p") %>
               </p>
+              <div class="flex justify-between items-center">
               <p class="text-gray-600">
                 Voting Deadline: <%= episode.voting_deadline.strftime("%B %d, %Y at %I:%M %p") %>
               </p>
+                <button class="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                </button>
+              </div>
             </div>
           <% end %>
         </div>
@@ -47,7 +51,7 @@
       <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contestants</h2>
       <div class="bg-white rounded-lg shadow-md p-6">
         <div class="space-y-2">
-          <% @contestants.each do |contestant| %>
+          <% @season_contestants.each do |contestant| %>
             <div class="flex justify-between items-center py-2 border-b border-gray-200 last:border-0">
               <span class="text-gray-800"><%= contestant.name %></span>
               <span class="px-2 py-1 text-xs rounded-full <%= contestant.status == 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">

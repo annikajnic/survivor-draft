@@ -1,10 +1,84 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900"><%= @user.full_name %></h1>
+          <p class="text-gray-600 mt-1"><%= @user.email %></p>
+        </div>
+        <div class="flex space-x-2">
+          <%= link_to "Edit Profile", edit_user_registration_path, class: "px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+        </div>
+      </div>
 
-<%= render @user %>
+      <div class="border-t border-gray-200 pt-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Your Drafts</h2>
+        <% if @user.drafts.any? %>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <% @user.drafts.each do |draft| %>
+              <div class="bg-gray-50 rounded-lg p-4">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="text-lg font-medium text-gray-900">Season <%= draft.season_number %></h3>
+                    <p class="text-sm text-gray-600">
+                      <%= draft.episodes_count %> Episodes • 
+                      <%= draft.airing_datetime.strftime("%B %d, %Y") %>
+                    </p>
+                  </div>
+                  <span class="px-2 py-1 text-xs rounded-full <%= draft.airing_datetime > Time.current ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+                    <%= draft.airing_datetime > Time.current ? 'Upcoming' : 'Active' %>
+                  </span>
+                </div>
+                <div class="mt-4">
+                  <%= link_to "View Draft", draft_path(draft), class: "text-blue-600 hover:text-blue-800 text-sm font-medium" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-600">You haven't joined any drafts yet.</p>
+        <% end %>
+      </div>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) %> |
-  <%= link_to "Back to users", users_path %>
-
-  <%= button_to "Destroy this user", @user, method: :delete %>
-</div>
+      <div class="border-t border-gray-200 pt-6 mt-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Your Votes</h2>
+        <% if @user.votes.any? %>
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <table class="min-w-full divide-y divide-gray-300">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900">Episode</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Contestant</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                  <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                <% @user.votes.includes(:episode, :contestant).order(created_at: :desc).each do |vote| %>
+                  <tr>
+                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900">
+                      Episode <%= vote.episode.number %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <%= vote.contestant.name %>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= vote.contestant.active? ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+                        <%= vote.contestant.status.titleize %>
+                      </span>
+                    </td>
+                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                      <%= vote.created_at.strftime("%B %d, %Y") %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p class="text-gray-600">You haven't submitted any votes yet.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 

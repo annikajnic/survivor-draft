@@ -1,0 +1,108 @@
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+  <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+    <div class="p-6">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900">Episode <%= @episode.number %></h1>
+          <p class="mt-1 text-sm text-gray-500">
+            Season <%= @episode.season_number %> • Air Date: <%= @episode.air_date.strftime("%B %d, %Y at %I:%M %p") %>
+          </p>
+        </div>
+        <span class="px-3 py-1 text-sm rounded-full <%= @episode.status == 'current' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' %>">
+          <%= @episode.status.titleize %>
+        </span>
+      </div>
+
+      <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3">
+            <p class="text-sm text-blue-700">
+              Voting Deadline: <%= @episode.voting_deadline.strftime("%B %d, %Y at %I:%M %p") %>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <% if user_signed_in? && current_user.active? %>
+        <div class="mb-6">
+          <% if current_user.votes.where(episode: @episode).exists? %>
+            <div class="bg-green-50 border-l-4 border-green-400 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm text-green-700">
+                    You have already submitted your vote for this episode.
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% elsif @episode.voting_open? %>
+            <%= link_to new_vote_path(episode_id: @episode.id), class: "inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" do %>
+              <svg class="-ml-1 mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+              </svg>
+              Submit Your Vote
+            <% end %>
+          <% else %>
+            <div class="bg-red-50 border-l-4 border-red-400 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <p class="text-sm text-red-700">
+                    Voting is currently closed for this episode.
+                  </p>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div>
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">Current Votes</h2>
+        <% if @player_votes.any? %>
+          <div class="bg-white shadow overflow-hidden sm:rounded-md">
+            <ul class="divide-y divide-gray-200">
+              <% @player_votes.each do |vote| %>
+                <li class="px-6 py-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <div class="text-sm font-medium text-gray-900">
+                        <%= vote.user.full_name %>
+                      </div>
+                    </div>
+                    <div class="flex items-center">
+                      <div class="text-sm text-gray-500 mr-4">
+                        <%= vote.contestant.name %>
+                      </div>
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <%= vote.contestant.active? ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+                        <%= vote.contestant.status.titleize %>
+                      </span>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        <% else %>
+          <div class="text-center py-4">
+            <p class="text-gray-500">No votes have been submitted yet for this episode.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div> 

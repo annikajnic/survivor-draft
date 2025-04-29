@@ -5,6 +5,10 @@ class VotesController < ApplicationController
   before_action :check_voting_open, only: [ :new, :create ]
   before_action :check_previous_vote, only: [ :new, :create ]
 
+  def index
+    @player_votes = Vote.where(episode_id: @episode.id, user_id: current_user.id)
+  end
+
   def new
     @vote = Vote.new
     @available_contestants = Contestant.active
@@ -14,6 +18,7 @@ class VotesController < ApplicationController
   def create
     @vote = current_user.votes.build(vote_params)
     @vote.episode = @episode
+    @player_votes = Vote.where(episode_id: @episode.id, user_id: current_user.id)
 
     if @vote.save
       redirect_to root_path, notice: "Your vote has been submitted successfully!"
@@ -23,6 +28,7 @@ class VotesController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
 
   private
 

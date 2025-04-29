@@ -35,7 +35,7 @@
         <%= alert %>
       </div>
     <% end %>
-    <% if current_user.admin? %>
+    <% if current_user &&current_user.admin? %>
       <%= render "layouts/admin_header" %>
     <% else %>
       <%= render "layouts/user_header" %>

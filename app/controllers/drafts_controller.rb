@@ -8,8 +8,8 @@ class DraftsController < ApplicationController
 
   def show
     @episodes = @draft.episodes.order(number: :asc)
-    @contestants = @draft.contestants.order(name: :asc)
     @players = @draft.players()
+    @season_contestants = Contestant.where(season_number: @draft.season_number).order(:name)
   end
 
   def new

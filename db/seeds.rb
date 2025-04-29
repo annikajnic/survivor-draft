@@ -37,4 +37,14 @@ contestants.each do |contestant|
   Contestant.create!(contestant.merge(season_number: 48))
 end
 
+users = [
+  { name: "Annika Nicol", email: "annikajnicol@gmail.com", password: "password", role: "admin" },
+  { name: "Jane Doe", email: "jane@example.com", password: "password", role: "player" }
+]
+
+users.each do |user|
+  User.create!(user)
+end
+
 puts "Created #{Contestant.count} contestants for Season 48"
+puts "Created #{User.count} users"
