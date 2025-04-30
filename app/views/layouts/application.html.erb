@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Survivor Draft - <%= content_for?(:title) ? yield(:title) : "Home" %></title>
+    <title>Draft - <%= content_for?(:title) ? yield(:title) : "Home" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -35,11 +35,9 @@
         <%= alert %>
       </div>
     <% end %>
-    <% if current_user &&current_user.admin? %>
-      <%= render "layouts/admin_header" %>
-    <% else %>
-      <%= render "layouts/user_header" %>
-    <% end %>
+    
+      <%= render "layouts/header" %>
+
     <main class="flex-1">
       <%= yield %>
     </main>
