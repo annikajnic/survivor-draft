@@ -7,13 +7,15 @@ Rails.application.routes.draw do
 
   # Root route
   root "drafts#index"
-  get "admin/test", to: "admin/test#index"
-  get "admin/test/practice", to: "admin/test#practice"
+
+  resources :drafts
 
   # Drafts routes
   resources :drafts do
+    resources :contestants
     resources :episodes, only: [ :show, :update ]
     resources :votes, only: [ :create, :update ]
+    resources :final_predictions, only: [ :new, :create ]
     member do
       get :send_invites
       post :send_invites
@@ -23,34 +25,15 @@ Rails.application.routes.draw do
   # Contestants routes
   resources :contestants, only: [ :index, :show ]
 
-  # Users routes
-  resources :users, only: [ :show ] do
-    member do
-      get :drafts
-      get :votes
-    end
-  end
+  # # Users routes
+  # resources :users, only: [ :show ] do
+  #   member do
+  #     get :drafts
+  #     get :votes
+  #   end
+  # end
 
-  # Admin namespace with admin layout
-  namespace :admin do
-    # Admin dashboard
-    root "dashboard", to: "dashboard#index"
 
-    # Admin resources
-    resources :contestants
-    resources :drafts
-    resources :users, only: [ :index, :show, :edit, :update ]
-  end
-
-  # User routes with user layout
-  scope module: :player do
-    # User dashboard
-    get "dashboard", to: "dashboard#index"
-
-    # User resources
-    resources :votes, only: [ :new, :create ]
-    resources :final_predictions, only: [ :new, :create ]
-  end
 
   # Public routes (no layout)
   get "rules", to: "home#rules"
