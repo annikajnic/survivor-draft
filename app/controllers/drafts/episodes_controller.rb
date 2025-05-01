@@ -1,4 +1,4 @@
-class Admin::EpisodesController < ApplicationController
+class Drafts::EpisodesController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin
   before_action :set_episode, only: [ :show, :edit, :update, :destroy ]

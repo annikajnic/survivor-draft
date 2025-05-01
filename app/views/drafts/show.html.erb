@@ -1,7 +1,7 @@
 <div class="container mx-auto px-4 py-8">
   <div class="flex justify-between items-center mb-6">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900">Season <%= @draft.season_number %></h1>
+      <h1 class="text-3xl font-bold text-gray-900"><%= @draft.name %> &mdash; Season <%= @draft.season_number %></h1>
       <p class="text-gray-600 mt-1">
         Starting <%= @draft.airing_datetime.strftime("%B %d, %Y at %I:%M %p") %> • 
         <%= @draft.episodes_count %> Episodes
@@ -38,6 +38,7 @@
                 Voting Deadline: <%= episode.voting_deadline.strftime("%B %d, %Y at %I:%M %p") %>
               </p>
                 <button class="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  <%= link_to "Vote", new_draft_vote_path(@draft.id) %>
                 </button>
               </div>
             </div>

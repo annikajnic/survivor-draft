@@ -1,4 +1,4 @@
-class Admin::DashboardController < ApplicationController
+class Drafts::DashboardController < ApplicationController
   before_action :authenticate_user!
   before_action :require_admin
 

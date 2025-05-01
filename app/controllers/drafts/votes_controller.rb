@@ -1,4 +1,4 @@
-class VotesController < ApplicationController
+class Drafts::VotesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_episode, only: [ :new, :create ]
   before_action :check_user_status, only: [ :new, :create ]

@@ -8,13 +8,13 @@ Rails.application.routes.draw do
   # Root route
   root "drafts#index"
 
-  resources :drafts
+  # resources :drafts
 
   # Drafts routes
   resources :drafts do
     resources :contestants
     resources :episodes, only: [ :show, :update ]
-    resources :votes, only: [ :create, :update ]
+    resources :votes, only: [ :new, :create, :update ]
     resources :final_predictions, only: [ :new, :create ]
     member do
       get :send_invites
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   # Contestants routes
-  resources :contestants, only: [ :index, :show ]
+  # resources :contestants, only: [ :index, :show ]
 
   # # Users routes
   # resources :users, only: [ :show ] do

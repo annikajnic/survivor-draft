@@ -65,6 +65,6 @@ class DraftsController < ApplicationController
   end
 
   def draft_params
-    params.require(:draft).permit(:season_number, :episodes_count, :airing_datetime)
+    params.require(:draft).permit(:name, :season_number, :episodes_count, :airing_datetime,  :votes_first_episode)
   end
 end

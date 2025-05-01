@@ -2,11 +2,19 @@ class DraftContestant < ApplicationRecord
   belongs_to :draft
   belongs_to :contestant
 
-  validates :draft, presence: true
-  validates :contestant, presence: true
+  validates :draft_position, presence: true, uniqueness: { scope: :draft_id }
   validates :contestant_id, uniqueness: { scope: :draft_id }
 
+  scope :active, -> { where(is_eliminated: false) }
+  scope :eliminated, -> { where(is_eliminated: true) }
+  scope :ordered_by_position, -> { order(draft_position: :asc) }
+  scope :by_tribe, ->(tribe) { where(tribe: tribe) }
+
   validate :contestant_season_matches_draft
+
+  def eliminate!
+    update!(is_eliminated: true, eliminated_at: Time.current)
+  end
 
   private
 

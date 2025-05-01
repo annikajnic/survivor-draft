@@ -1,18 +1,22 @@
 class Draft < ApplicationRecord
   belongs_to :draft_owner, class_name: "User"
 
-  # Contestants in this draft
+  has_many :draft_players, dependent: :destroy
+  has_many :players, through: :draft_players, source: :user
   has_many :draft_contestants, dependent: :destroy
   has_many :contestants, through: :draft_contestants
+  has_many :episodes, dependent: :destroy
 
   # Players in this draft
   has_many :draft_players, dependent: :destroy
   has_many :players, through: :draft_players, source: :player
 
+
   # Episodes for this draft
   has_many :episodes, -> { order(number: :asc) }, dependent: :destroy
 
   # Validations
+  validates :name, presence: true
   validates :season_number, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :episodes_count, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :airing_datetime, presence: true
@@ -43,5 +47,20 @@ class Draft < ApplicationRecord
 
   def add_owner_as_player
     draft_players.create!(player: draft_owner)
+  end
+
+  def add_contestant(contestant, position)
+    draft_contestants.create!(
+      contestant: contestant,
+      draft_position: position
+    )
+  end
+
+  def remove_contestant(contestant)
+    draft_contestants.find_by(contestant: contestant)&.destroy
+  end
+
+  def contestant_positions
+    draft_contestants.ordered_by_position.pluck(:contestant_id)
   end
 end

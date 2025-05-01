@@ -1,4 +1,4 @@
-class Admin::ContestantsController < ApplicationController
+class Drafts::ContestantsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_contestant, only: [ :show, :edit, :update, :destroy ]
 
