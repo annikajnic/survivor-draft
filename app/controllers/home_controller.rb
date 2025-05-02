@@ -6,7 +6,7 @@ class HomeController < ApplicationController
     if @current_episode
       @player_votes = Vote.includes(:user, :contestant)
                          .where(episode: @current_episode)
-                         .order("users.first_name, users.last_name")
+                         .order("users.name")
     end
   end
 

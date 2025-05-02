@@ -18,8 +18,12 @@ class Episode < ApplicationRecord
   scope :by_season, ->(season) { where(season_number: season) }
   scope :current_season, -> { where(season_number: Contestant.maximum(:season_number)) }
 
+  def self.past_episodes
+    completed
+  end
+
   def self.current_episode
-    current_season.where("air_date <= ?", Time.current)
+    current_season.where("air_date < ?", Time.current)
                  .order(number: :desc)
                  .first
   end

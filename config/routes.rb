@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   }
 
   # Root route
-  root "drafts#index"
+  root "home#index"
 
   # resources :drafts
 

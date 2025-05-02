@@ -37,14 +37,35 @@ contestants.each do |contestant|
   Contestant.create!(contestant.merge(season_number: 48))
 end
 
-users = [
-  { name: "Annika Nicol", email: "annikajnicol@gmail.com", password: "password", role: "admin" },
-  { name: "Jane Doe", email: "jane@example.com", password: "password", role: "player" }
-]
+# users = [
+#   { name: "Annika Nicol", email: "annikajnicol@gmail.com", password: "password", role: "admin" },
+#   { name: "Jane Doe", email: "jane@example.com", password: "password", role: "player" }
+# ]
 
-users.each do |user|
-  User.create!(user)
+# users.each do |user|
+#   User.create!(user)
+# end
+
+if User.find_by(email: "annikajnicol@gmail.com").nil?
+  User.create!(name: "Annika Nicol", email: "annikajnicol@gmail.com", password: "password", role: "admin")
 end
+
+# draft = Draft.create!(name: "Draft Season 48", season_number: 48, airing_datetime: Time.parse("2025-02-26T20:00:00-05:00"), draft_owner: User.find_by(email: "annikajnicol@gmail.com"), episodes_count: 13)
+# draft.add_owner_as_player
+# draft = Draft.find_by(name: "Draft Season 48")
+# draft_players = draft.draft_players
+
+# draft.create_episodes
+
+# Create Votes for past episodes
+# Create votes for episode 1
+Vote.create(user: User.find_by(email: "jane@example.com"), episode: Episode.find_by(number: 1), contestant: Contestant.find_by(name: "Ava"))
+
+# Create votes for episode 2
+Vote.create(user: User.find_by(email: "jane@example.com"), episode: Episode.find_by(number: 2), contestant: Contestant.find_by(name: "Kenzie"))
+
 
 puts "Created #{Contestant.count} contestants for Season 48"
 puts "Created #{User.count} users"
+puts "Created #{Episode.count} episodes"
+puts "Created #{Vote.count} votes"

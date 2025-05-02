@@ -6,20 +6,19 @@ class Vote < ApplicationRecord
   validates :user_id, presence: true
   validates :contestant_id, presence: true
   validates :episode_id, presence: true
-  validate :user_can_vote
+  # validate :user_can_vote
   validate :contestant_is_active
   validate :no_duplicate_votes
   validate :voting_is_open
 
   private
 
-  def user_can_vote
-    return if user.active?
-    errors.add(:user, "is eliminated and cannot vote")
-  end
+  # def user_can_vote
+  #   errors.add(:user, "is eliminated and cannot vote")
+  # end
 
   def contestant_is_active
-    return if contestant.active?
+    return if contestant.status=="active"
     errors.add(:contestant, "is eliminated and cannot be voted for")
   end
 

@@ -27,7 +27,7 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
     add_index :contestants, :name, unique: true
 
     # Create episodes table
-    create_table :episodes do |t|
+    create_table :episodes, id: :uuid do |t|
       t.integer :number, null: false
       t.datetime :air_date, null: false
       t.datetime :voting_deadline, null: false
@@ -80,7 +80,7 @@ class CreateAllTables < ActiveRecord::Migration[7.1]
     add_index :draft_votes, [ :draft_id, :votes_id ], unique: true
 
     # Create votes table
-    create_table :votes do |t|
+    create_table :votes, id: :uuid do |t|
       t.references :draft, null: false, type: :uuid, foreign_key: true
       t.references :user, null: false, type: :uuid, foreign_key: true
       t.references :contestant, null: false, type: :uuid, foreign_key: true
